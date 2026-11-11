@@ -16,6 +16,7 @@ namespace Dominio
 
         public int Id{get { return _id; }}
         public string Descripcion { get { return _descripcion; } }
+        public DateTime? FechaColecta { get { return _fechaColecta; } }
 
         #endregion
 
@@ -43,6 +44,8 @@ namespace Dominio
             if (_fechaColecta > fechaActual.AddMonths(-6)) puntaje = 5;
             return puntaje;
         }
+
+        public abstract string TipoEvidencia();
 
         public override string ToString()
         {

@@ -1,0 +1,16 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = "Perfil";
+}
+
+<h4>Mi Perfil</h4>
+
+<br />
+
+@if (ViewBag.Investigador != null)
+{
+    Investigador unInvestigador = ViewBag.Investigador;
+    <p>@unInvestigador.Nombre</p>
+    <p>@unInvestigador.Email</p>
+    <p>@unInvestigador.Rol.ToString()</p>
+}

@@ -6,7 +6,8 @@ namespace Dominio
 {
     public class Sistema
     {
-        #region Precarga sistema
+        #region Singleton
+        //SINGLETON 1: Hacer privado el constructor
         public Sistema()
         {
             PrecargaInvestigadores();
@@ -14,6 +15,21 @@ namespace Dominio
             PrecargaCasos();
             PrecargaEvidencias();
         }
+
+        //SINGLETON 2: Crear un atributo estatico de tipo Sistema donde guardo la referencia al unico objeto Sistema que voy a permitir en mi aplicación
+        private static Sistema s_instancia;
+
+        //SINGLETON 3: Crear una property para crear y obtener el unico objeto Sistema de mi aplicacion
+        public static Sistema Instancia
+        {
+            get
+            {
+                if (s_instancia == null) s_instancia = new Sistema();
+                return s_instancia;
+            }
+        }
+
+
         #endregion
 
         #region Propiedades
@@ -71,8 +87,9 @@ namespace Dominio
             unCaso.AltaEvidenciaTestimonio(fechaColecta, descripcion, nombre, credibilidad);
         }
 
-        public Caso BuscarCaso(int unCasoId)
+        public Caso BuscarCaso(int? unCasoId)
         {
+            if (unCasoId == null) throw new Exception("El id del caso no puede ser vacio");
             foreach (Caso unCaso in _casos)
             {
                 if (unCaso.Id == unCasoId) return unCaso;
@@ -80,7 +97,7 @@ namespace Dominio
             return null;
         }
 
-        public string RealizarRecomendacion(int unCasoId)
+        public string RealizarRecomendacion(int? unCasoId)
         {
             Caso unCaso = BuscarCaso(unCasoId);
             if (unCaso == null) throw new Exception("No existe el caso");
@@ -105,29 +122,6 @@ namespace Dominio
             return recomendacion;
         }
 
-
-        public List<Caso> BuscarCasosPorInvestigador(string email)
-        {
-            List<Caso> casosEncontrados = new List<Caso>();
-            foreach(Caso unCaso in _casos) 
-            {
-                if(unCaso.Investigador.Email==email)
-                {
-                    casosEncontrados.Add(unCaso);
-                }
-            }
-            return casosEncontrados;
-        }
-
-        public bool ValidarSiExisteEmail(string email)
-        {
-            foreach (Investigador unInvestigador in _investigadores)
-            {
-                if (unInvestigador.Email == email) return true;
-            }
-            return false;
-        }
-
         public Sospechoso BuscarSospechosoPorCedula(string cedula)
         {
             if (string.IsNullOrEmpty(cedula)) throw new Exception("Cédula no puede ser vacia");
@@ -141,15 +135,68 @@ namespace Dominio
             return null;
         }
 
-        public List<Sospechoso> ListarSospechososConAntecedentes() 
+        public List<Sospechoso> ListarSospechososConAntecedentes()
         {
             List<Sospechoso> listaDeSospechosos = new List<Sospechoso>();
-            foreach(Sospechoso unSospechoso in _sospechosos)
+            foreach (Sospechoso unSospechoso in _sospechosos)
             {
-                if(unSospechoso.TieneAntecedentes == true) listaDeSospechosos.Add(unSospechoso);
+                if (unSospechoso.TieneAntecedentes == true) listaDeSospechosos.Add(unSospechoso);
             }
             return listaDeSospechosos;
         }
+
+        public Investigador BuscarInvestigador(string email)
+        {
+            if (string.IsNullOrEmpty(email)) throw new Exception("Email no puede ser vacio");
+            else
+            {
+                foreach (Investigador unInvestigador in _investigadores)
+                {
+                    if (unInvestigador.Email == email) return unInvestigador;
+                }
+            }
+            return null;
+        }
+
+        public bool ValidarSiExisteEmail(string email)
+        {
+            foreach (Investigador unInvestigador in _investigadores)
+            {
+                if (unInvestigador.Email == email) return true;
+            }
+            return false;
+        }
+
+
+        public List<Caso> BuscarCasosPorInvestigador(string email)
+        {
+            if (!ValidarSiExisteEmail(email)) throw new Exception("Ese email no se asocia a ningún investigador");
+
+            Investigador unInvestigador = BuscarInvestigador(email);
+
+            List<Caso> casosEncontrados = new List<Caso>();
+            foreach (Caso unCaso in _casos)
+            {
+                if (unCaso.Investigador.Equals(unInvestigador))
+                {
+                    casosEncontrados.Add(unCaso);
+                }
+            }
+            if (casosEncontrados.Count == 0) throw new Exception("El investigador carece de casos");
+            return casosEncontrados;
+
+        }
+
+        public Investigador Login(string email, string password)
+        {
+            foreach (Investigador unInvestigador in _investigadores)
+            {
+                if (unInvestigador.Email == email && unInvestigador.Password == password) return unInvestigador;
+            }
+
+            throw new Exception("Email o contraseña incorrecta");
+        }
+        
 
         #endregion
 

@@ -169,27 +169,17 @@ namespace Consola
             #region Objetivo II
             static void ListarCasosPorInvestigador()
             {
-                string email = PedirTexto("Ingresar el email del investigador: ");
-                if (!miSistema.ValidarSiExisteEmail(email))
-                {
-                    MostrarError("Ese email no se asocia a ningún investigador");
-                    
-                }
-                else
-                { 
+                try { 
+                    string email = PedirTexto("Ingresar el email del investigador: ");
                     List<Caso> casos = miSistema.BuscarCasosPorInvestigador(email);
-
-                    if (casos.Count == 0)
-                    {
-                        MostrarMensajeColor(ConsoleColor.Yellow,"El investigador carece de casos"); 
-                    }
-                    else
-                    {
-                        foreach(Caso unCaso in casos) 
-                        {
-                            MostrarMensajeColor(ConsoleColor.Green, $"Caso Id: {unCaso.Id}; Nombre: {unCaso.Nombre}; Investigador: {unCaso.Investigador.Nombre}");
-                        }
-                    }
+                    foreach (Caso unCaso in casos)
+                {
+                    MostrarMensajeColor(ConsoleColor.Green, $"Caso Id: {unCaso.Id}; Nombre: {unCaso.Nombre}; Investigador: {unCaso.Investigador.Nombre}");
+                }
+                }
+                catch (Exception ex)
+                {
+                    MostrarError(ex.Message);
                 }
             }
             #endregion

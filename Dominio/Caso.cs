@@ -34,6 +34,8 @@ namespace Dominio
             _investigador = investigador;
         }
 
+        public string Descripcion { get { return _descripcion; } }
+        public bool? EstaCerrado { get { return _estaCerrado; } }
         public string Nombre { get { return _nombre; } }
         public Sospechoso PrincipalSospechoso { get { return _principalSospechoso; } }
         #endregion

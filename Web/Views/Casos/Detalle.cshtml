@@ -1,0 +1,50 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = $"Detalle del caso {ViewBag.Caso.Nombre}";
+}
+
+<h4>Recomendación</h4>
+@ViewBag.Recomendacion
+
+<br />
+<br />
+
+<hr>
+
+@if (ViewBag.Caso == null)
+{
+    <div class="alert alert-danger">Caso no encontrada</div>
+}
+else
+{
+    <h5>Detalles del caso</h5>
+    Caso unCaso = ViewBag.Caso;
+    <p>Id: @unCaso.Id</p>
+    <p>Nombre: @unCaso.Nombre</p>
+    <p>Descripción: @unCaso.Descripcion</p>
+    <p>Principal sospechoso: @unCaso.PrincipalSospechoso.Nombre</p>
+    <p>Investigador: @unCaso.Investigador.Nombre</p>
+    <p>¿Está Cerrado?: @(unCaso.EstaCerrado == true ? "Sí" : "No")</p>
+    <p>Puntaje Total: @unCaso.CalcularPuntajeTotal()</p>
+
+    <br />
+    <hr>
+    <h6>Evidencias</h6>
+    <hr>
+    @if (unCaso.Evidencias == null || unCaso.Evidencias.Count() == 0)
+    {
+        <div class="alert alert-warning">No se han ingresado evidencias</div>
+    }
+    else
+    {
+        @foreach (Evidencia evidencia in unCaso.Evidencias)
+        {
+            <p>Descripción: @evidencia.Descripcion</p>
+            <p>Tipo: @evidencia.TipoEvidencia()</p>
+            <p>Fecha de recolección: @(evidencia.FechaColecta == null ? "No hay fecha" : evidencia.FechaColecta.Value.ToShortDateString())</p>
+            <p>Puntaje: @evidencia.CalcularPuntaje()</p>
+            <hr>
+        }
+    }
+
+}

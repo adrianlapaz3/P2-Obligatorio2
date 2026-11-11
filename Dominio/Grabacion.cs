@@ -35,6 +35,11 @@ namespace Dominio
             return puntaje;
         }
 
+        public override string TipoEvidencia()
+        {
+            return "Grabación";
+        }
+
         public override string ToString()
         {
             /*return $"{base.ToString()}; Calidad: {_calidad}; Captura infraganti: {(_capturaInfraganti == true ? "Si" : "No")}";*/

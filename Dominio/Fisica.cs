@@ -31,6 +31,11 @@ namespace Dominio
             return puntaje;
         }
 
+        public override string TipoEvidencia()
+        {
+            return "Física";
+        }
+
         public override string ToString()
         {
             /*return $"{base.ToString()}; Tiene huella: {(_tieneHuella == true ? "Si" : "No")}";*/

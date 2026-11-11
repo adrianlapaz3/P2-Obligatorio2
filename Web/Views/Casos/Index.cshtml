@@ -1,0 +1,56 @@
+﻿@using Dominio;
+
+@{
+    ViewData["Title"] = "Lista de Casos";
+}
+
+<h4>Lista de casos</h4>
+
+<br />
+
+@if (ViewBag.Exito != null)
+{
+    <div class="alert alert-success">@ViewBag.Exito</div>
+}
+
+@if (ViewBag.Listado != null)
+{
+    @if (ViewBag.Listado.Count == 0)
+    {
+        <div class="alert alert-danger">No hay casos.</div>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Principal sospecho</th>
+                <th>Investigador</th>
+                <th>¿Está Cerrado?</th>
+                <th>Puntaje total</th>
+                @if(Context.Session.GetString("rol") == "FISCAL")
+                {
+                    <th>Acciones</th>
+                }
+            </tr>
+            @foreach (Caso unCaso in ViewBag.Listado)
+            {
+                <tr>
+                    <td>@unCaso.Id</td>
+                    <td>@unCaso.Nombre</td>
+                    <td>@unCaso.Descripcion</td>
+                    <td>@unCaso.PrincipalSospechoso.Nombre</td>
+                    <td>@unCaso.Investigador.Nombre</td>
+                    <td>@(unCaso.EstaCerrado == true ? "Sí" : "No")</td>
+                    <td>@unCaso.CalcularPuntajeTotal()</td>
+                    @if (Context.Session.GetString("rol") == "FISCAL")
+                    {
+                        <td><a href="/casos/detalle/@unCaso.Id">Ver</a></td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+}

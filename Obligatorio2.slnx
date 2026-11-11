@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="Consola/Consola.csproj" />
   <Project Path="Dominio/Dominio.csproj" />
+  <Project Path="Web/Web.csproj" Id="3acac42c-7800-46f8-b280-22d4591e8c86" />
 </Solution>

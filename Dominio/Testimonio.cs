@@ -42,6 +42,11 @@ namespace Dominio
             return puntaje;
         }
 
+        public override string TipoEvidencia()
+        {
+            return "Testimonio";
+        }
+
         public override string ToString()
         {
             /*return $"{base.ToString()}; Nombre: {_nombre}; [Credibilidad: {_credibilidad.ToString()}]";*/

@@ -1,0 +1,19 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h4>Login</h4>
+
+<br />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<form method="post" action="/investigadores/login">
+    <input type="email" name="email" placeholder="Ingrese email" />
+    <input type="password" name="password" placeholder="Ingrese contraseña" />
+    <input type="submit" value="Ingresar" />
+</form>

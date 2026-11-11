@@ -14,6 +14,7 @@ namespace Dominio
         private Rol? _rol;
 
         public string Email { get { return _email; } }
+        public string Password { get { return _password; } }
         public string Nombre { get { return _nombre; } }
         public Rol? Rol { get { return _rol; } }
 
