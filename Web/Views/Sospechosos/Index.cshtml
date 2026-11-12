@@ -1,0 +1,48 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = "Sospechosos";
+}
+
+<h4>Listado de sospechosos</h4>
+
+<br />
+
+<form action="/sospechosos/index" method="get">
+    <input type="number" placeholder="Ingrese una" name="edad" />
+    <input type="submit" value="Filtrar" />
+</form>
+
+<br />
+
+<a href="/sospechosos">Limpiar busqueda</a>
+
+<br />
+
+@if (ViewBag.Listado != null)
+{
+    if (ViewBag.Listado.Count == 0)
+    {
+        <div class="alert alert-danger">No hay agencias en el Sistema</div>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <tr>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Fecha de nacimiento</th>
+                <th>Tiene antecedentes</th>
+            </tr>
+            @foreach (Sospechoso unSospechoso in ViewBag.Listado)
+            {
+                <tr>
+                    <td>@unSospechoso.Nombre</td>
+                    <td>@unSospechoso.Cedula</td>
+                    <td>@unSospechoso.FechaNacimiento.ToShortDateString()</td>
+                    <td>@(unSospechoso.TieneAntecedentes == true ? "Sí" : "No")</td>
+                </tr>
+            }
+        </table>
+        
+    }
+}

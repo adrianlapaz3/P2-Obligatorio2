@@ -183,8 +183,8 @@ namespace Dominio
                 }
             }
             if (casosEncontrados.Count == 0) throw new Exception("El investigador carece de casos");
+            casosEncontrados.Sort();
             return casosEncontrados;
-
         }
 
         public Investigador Login(string email, string password)
@@ -196,7 +196,54 @@ namespace Dominio
 
             throw new Exception("Email o contraseña incorrecta");
         }
-        
+
+
+        public int ConvertirAEntero(string enteroString)
+        {
+            int enteroConvertido = 0;
+            if(!int.TryParse(enteroString, out enteroConvertido)) throw new Exception("El valor ingresado no es un número entero válido");
+            return enteroConvertido;
+        }
+
+        private int CalcularEdad(DateTime fechaNacimiento)
+        {
+            DateTime fechaActual = DateTime.Now;
+            int edad = fechaActual.Year - fechaNacimiento.Year;
+            if (fechaActual.Month < fechaNacimiento.Month) 
+            { 
+                edad--;
+            } else if (fechaActual.Month == fechaNacimiento.Month)
+            {
+                if (fechaActual.Day < fechaNacimiento.Day)
+                {
+                    edad--;
+                }
+            }
+            return edad;
+        }
+
+        public List<Sospechoso> ListarSopechososPorEdad(int? edad)
+        {
+            List<Sospechoso> sospechososFiltrados = new List<Sospechoso>();
+            if (edad == null)
+            {
+                sospechososFiltrados = _sospechosos;
+            }
+            else
+            {
+                
+                foreach (Sospechoso unSospechoso in _sospechosos)
+                {
+                    int edadSospechoso = CalcularEdad(unSospechoso.FechaNacimiento);
+                    if (edadSospechoso > edad)
+                    {
+                        sospechososFiltrados.Add(unSospechoso);
+                    }
+                }
+                
+            }
+            return sospechososFiltrados;
+        }
 
         #endregion
 
@@ -241,34 +288,34 @@ namespace Dominio
         {
             // Solo se asignan investigadores con rol DETECTIVE.
             // Los detectives ocupan los indices 0 al 4.
-            AltaCaso(new Caso("Caso 1", "Asalto en agencia de pagos", false,
+            AltaCaso(new Caso("Asalto", "Asalto en agencia de pagos", false,
                 _sospechosos[0], _investigadores[0]));
 
-            AltaCaso(new Caso("Caso 2", "Robo de vehiculo en Montevideo", false,
+            AltaCaso(new Caso("Robo", "Robo de vehiculo en Montevideo", true,
                 _sospechosos[1], _investigadores[1]));
 
-            AltaCaso(new Caso("Caso 3", "Fraude bancario mediante transferencias", false,
+            AltaCaso(new Caso("Fraude", "Fraude bancario mediante transferencias", false,
                 _sospechosos[3], _investigadores[2]));
 
-            AltaCaso(new Caso("Caso 4", "Hurto en comercio del centro", false,
+            AltaCaso(new Caso("Hurto", "Hurto en comercio del centro", true,
                 _sospechosos[4], _investigadores[3]));
 
-            AltaCaso(new Caso("Caso 5", "Estafa mediante venta de productos", false,
+            AltaCaso(new Caso("Estafa", "Estafa mediante venta de productos", false,
                 _sospechosos[6], _investigadores[4]));
 
-            AltaCaso(new Caso("Caso 6", "Robo en vivienda particular", false,
+            AltaCaso(new Caso("Robo", "Robo en vivienda particular", true,
                 _sospechosos[8], _investigadores[0]));
 
-            AltaCaso(new Caso("Caso 7", "Falsificacion de documentos", false,
+            AltaCaso(new Caso("Falsificacion", "Falsificacion de documentos", false,
                 _sospechosos[9], _investigadores[1]));
 
-            AltaCaso(new Caso("Caso 8", "Asalto a estacion de servicio", false,
+            AltaCaso(new Caso("Asalto", "Asalto a estacion de servicio", true,
                 _sospechosos[11], _investigadores[2]));
 
-            AltaCaso(new Caso("Caso 9", "Hurto de equipos informaticos", false,
+            AltaCaso(new Caso("Hurto", "Hurto de equipos informaticos", false,
                 _sospechosos[13], _investigadores[3]));
 
-            AltaCaso(new Caso("Caso 10", "Fraude mediante identidad digital", false,
+            AltaCaso(new Caso("Fraude", "Fraude mediante identidad digital", true,
                 _sospechosos[14], _investigadores[4]));
         }
 

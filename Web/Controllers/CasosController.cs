@@ -16,7 +16,6 @@ namespace Web.Controllers
             {
                 ViewBag.Listado = miSistema.BuscarCasosPorInvestigador(HttpContext.Session.GetString("email"));
                 ViewBag.MiRol = HttpContext.Session.GetString("rol");
-                /*BuscarCasosPorInvestigador(email)*/
             }
             else if (HttpContext.Session.GetString("rol") == "FISCAL")
             {

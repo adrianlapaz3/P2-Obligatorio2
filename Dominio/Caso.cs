@@ -6,7 +6,7 @@ using Dominio.Interfaces;
 
 namespace Dominio
 {
-    public class Caso : IValidable
+    public class Caso : IValidable, IComparable<Caso>
     {
         #region Propiedades
         private static int s_ultimoId = 1;
@@ -113,6 +113,16 @@ namespace Dominio
             }
             return retorno;
         }
+
+        public int CompareTo(Caso? other)
+        {
+            if (other == null) return 1;
+            int resultado = this._nombre.CompareTo(other._nombre);
+            if (resultado == 0) resultado = this._id.CompareTo(other._id);
+            return resultado;
+        }
+
+
         #endregion
     }
 }

@@ -17,6 +17,7 @@ namespace Dominio
         public string Cedula { get { return _cedula; } }
         public string Nombre { get { return _nombre; } }
         public bool TieneAntecedentes { get { return _tieneAntecedentes; } }
+        public DateTime FechaNacimiento { get { return _fechaNacimiento; } }
 
         #endregion
 
