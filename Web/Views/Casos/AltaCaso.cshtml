@@ -1,0 +1,43 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = "Alta de un caso";
+}
+
+<br>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+@if (ViewBag.Exito != null)
+{
+    <div class="alert alert-success">@ViewBag.Exito</div>
+}
+<br>
+<form method="post" action="/casos/AltaCaso">
+    <input type="text" placeholder="Ingrese nombre" name="nombre" value="@ViewBag.Nombre" /><br> <br>
+    <input type="text" placeholder="Ingrese descrpión" name="descripcion" value="@ViewBag.Descripcion" /> <br> <br>
+    <select id="estaCerrado">
+        <option value="" disabled selected>¿Está cerrado?</option>
+        <option value="0">No</option>
+        <option value="1">Sí</option>
+    </select>
+    <br> <br>
+    <select name="cedula">
+        <option value="" disabled selected>¿Quién es el sospechoso?</option>
+        @foreach (Sospechoso unSospechoso in ViewBag.ListadoSospechosos)
+        {
+            <option value="@unSospechoso.Cedula">@unSospechoso.Cedula - @unSospechoso.Nombre</option>
+        }
+    </select>
+    <br> <br>
+    <select name="mail">
+        <option value="" disabled selected>¿Quién es el investigador?</option>
+        @foreach (Investigador unInvestigador in ViewBag.ListadoInvestigadoresDetectives)
+        {
+            <option value="@unInvestigador.Email">@unInvestigador.Email - @unInvestigador.Nombre</option>
+        }
+    </select>
+    <br> <br>
+     <input type="submit" value="Crear caso" class="btn btn-success" />
+</form>

@@ -24,32 +24,42 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         
-                        @if(Context.Session.GetString("rol") != null)
+                        @if (Context.Session.GetString("rol") != null)
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Casos" asp-action="Index">Casos</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Perfil">Perfil</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Casos" asp-action="Index">Casos</a>
+                            </li>
 
                             @if (Context.Session.GetString("rol") != "FISCAL")
-                                {
+                            {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Sospechosos" asp-action="Index">Sospechosos</a>
                                 </li>
-                                }
+                            }
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Logout">Logout</a>
-                        </li>
+                            @if (Context.Session.GetString("rol") == "FISCAL")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Casos" asp-action="AltaCaso">Alta de casos</a>
+                                </li>
+                            }
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Perfil">Perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Logout">Logout</a>
+                            </li>
+
                         }
                         else
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Login">Login</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Registrarse">Registrarse</a>
+                            </li>
 
                         }
                     </ul>

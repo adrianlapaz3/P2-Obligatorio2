@@ -58,18 +58,25 @@ namespace Web.Controllers
         }
 
 
-        /*
+        [HttpGet]
+        public IActionResult Registrarse()
+        {
+            return View();
+        }
+
+
         [HttpPost]
-        public IActionResult Login(string email, string pass)
+        public IActionResult Registrarse(string email, string password, string nombre)
         {
             try
             {
-                if (HttpContext.Session.GetString("rol") != null) return View("NoAuth");
                 if (string.IsNullOrEmpty(email)) throw new Exception("Debe ingresar email");
-                if (string.IsNullOrEmpty(pass)) throw new Exception("Debe ingresar una contraseña");
-                Usuario usuario = miSistema.Login(email, pass);
+                if (string.IsNullOrEmpty(password)) throw new Exception("Debe ingresar una contraseña");
+                if (string.IsNullOrEmpty(nombre)) throw new Exception("Debe ingresar un nombre");
+                miSistema.AltaInvestigador(new Investigador(email, password, nombre, Rol.DETECTIVE));
+                Investigador unInvestigador = miSistema.Login(email, password);
                 HttpContext.Session.SetString("email", email);
-                HttpContext.Session.SetString("rol", usuario.MiRol.ToString());
+                HttpContext.Session.SetString("rol", unInvestigador.Rol.ToString());
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
@@ -77,24 +84,8 @@ namespace Web.Controllers
                 ViewBag.Error = ex.Message;
                 return View();
             }
-        }
-
-        [HttpGet]
-        public IActionResult Logout()
-        {
-            if (HttpContext.Session.GetString("rol") == null) return View("NoAuth");
-            HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public IActionResult Perfil()
-        {
-            if (HttpContext.Session.GetString("rol") == null) return View("NoAuth");
-            ViewBag.Usuario = miSistema.ObtenerUsuarioPorEmail(HttpContext.Session.GetString("email"));
             return View();
         }
-        */
 
     }
-    }
+}

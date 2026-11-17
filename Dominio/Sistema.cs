@@ -245,6 +245,21 @@ namespace Dominio
             return sospechososFiltrados;
         }
 
+        public List<Investigador> ListarInvestigadoresDetective()
+        {
+            if (_investigadores == null) throw new Exception("No existe la listsa de investigadores");
+            List<Investigador> investigadoresDetective = new List<Investigador>();
+            foreach (Investigador unInvestigador in _investigadores)
+            {
+                if (unInvestigador.Rol == Rol.DETECTIVE)
+                {
+                    investigadoresDetective.Add(unInvestigador);
+                }
+            }
+            if (investigadoresDetective.Count == 0) throw new Exception("No hay investigadores con rol DETECTIVE");
+            return investigadoresDetective;
+        }
+
         #endregion
 
         #region Precargas

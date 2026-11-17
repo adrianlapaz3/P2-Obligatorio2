@@ -1,0 +1,20 @@
+﻿@using Dominio;
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+<h4>Registrarse</h4>
+
+<br />
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<form method="post" action="/investigadores/registrarse">
+    <input type="email" name="email" placeholder="Ingrese email" />
+    <input type="password" name="password" placeholder="Ingrese contraseña" />
+    <input type="text" name="nombre" placeholder="Ingrese nombre" />
+    <input type="submit" value="Registrarse" />
+</form>
