@@ -8,7 +8,7 @@ namespace Dominio
     {
         #region Singleton
         //SINGLETON 1: Hacer privado el constructor
-        public Sistema()
+        private Sistema()
         {
             PrecargaInvestigadores();
             PrecargaSospechosos();
