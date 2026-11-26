@@ -20,42 +20,50 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
                         
+                        <!-- Página principal -->
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Página principal</a>
+                        </li>
+
                         @if (Context.Session.GetString("rol") != null)
                         {
+                            <!-- Lo que ve cualquier usuario logeado -->
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Casos" asp-action="Index">Casos</a>
                             </li>
 
-                            @if (Context.Session.GetString("rol") != "FISCAL")
+                            @if (Context.Session.GetString("rol") == "DETECTIVE")
                             {
+                                <!-- Lo que ve solamente si el usuario es DETECTIVE -->
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Sospechosos" asp-action="Index">Sospechosos</a>
                                 </li>
                             }
 
-                            @if (Context.Session.GetString("rol") == "FISCAL")
+                            else if (Context.Session.GetString("rol") == "FISCAL")
                             {
+                                <!-- Lo que ve solamente si el usuario es FISCAL -->
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Casos" asp-action="AltaCaso">Alta de casos</a>
                                 </li>
                             }
 
+                            <!-- Lo que ve cualquier usuario logeado -->
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Perfil">Perfil</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Logout">Logout</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Logout">Cerrar sesión</a>
                             </li>
 
                         }
                         else
                         {
+                            <!-- Lo que ve un usuario invitado -->
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Login">Login</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Login">Iniciar sesión</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Investigadores" asp-action="Registrarse">Registrarse</a>

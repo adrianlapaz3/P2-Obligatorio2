@@ -8,7 +8,7 @@ namespace Dominio
     public abstract class Evidencia : IValidable
     {
         #region Propiedades
-
+        
         private static int s_ultimoId = 1;
         protected int _id;
         protected DateTime? _fechaColecta;
@@ -17,9 +17,8 @@ namespace Dominio
         public int Id{get { return _id; }}
         public string Descripcion { get { return _descripcion; } }
         public DateTime? FechaColecta { get { return _fechaColecta; } }
-
+        
         #endregion
-
 
         #region Constructor
         protected Evidencia(DateTime fechaColecta, string descripcion)

@@ -48,7 +48,7 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult AltaCaso()
         {
-            if (HttpContext.Session.GetString("rol") != null || HttpContext.Session.GetString("rol") != "FISCAL") return View("NoAuth");
+            if (HttpContext.Session.GetString("rol") == null || HttpContext.Session.GetString("rol") != "FISCAL") return View("NoAuth");
             ViewBag.ListadoSospechosos = miSistema.Sospechosos;
             ViewBag.ListadoInvestigadoresDetectives = miSistema.ListarInvestigadoresDetective();
             return View();

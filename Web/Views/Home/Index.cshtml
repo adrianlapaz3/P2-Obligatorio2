@@ -1,8 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome @Context.Session.GetString("email")</h1>
+    <h1 class="display-2">Fiscalía</h1>
+    <br>
+    <br>
+    <h2 class="display-4">Sistema de gestión de casos</h2>
+    <br>
+    <br>
+    @if (@Context.Session.GetString("email") != null)
+    {
+        <h3 class="display-6">@Context.Session.GetString("email") te damos la bienvenida</h3>
+    }
+    else
+    {
+        <h3 class ="display-6">Iniciar sesión o registrarse para acceder a las funcionalidades del sistema</h3>
+    }
+    
 
 </div>

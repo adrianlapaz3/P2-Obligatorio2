@@ -247,7 +247,7 @@ namespace Dominio
 
         public List<Investigador> ListarInvestigadoresDetective()
         {
-            if (_investigadores == null) throw new Exception("No existe la listsa de investigadores");
+            if (_investigadores == null) throw new Exception("No existe la lista de investigadores");
             List<Investigador> investigadoresDetective = new List<Investigador>();
             foreach (Investigador unInvestigador in _investigadores)
             {
